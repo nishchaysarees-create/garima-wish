@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Wish for Dr. Garima 💌</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-cream: #fdf7f2;
+      --bg-blush: #f8e8e2;
+      --paper-ivory: #fcf8f2;
+      --ink-navy: #262b40;
+      --accent-rose: #b85d6b;
+      --accent-gold: #c99b66;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #fffaf6 0%, var(--bg-cream) 45%, var(--bg-blush) 100%);
+      color: var(--ink-navy);
+      font-family: 'Kalam', cursive;
+      overflow-x: hidden;
+    }
+
+    .font-serif-elegant {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-hand-heading {
+      font-family: 'Caveat', cursive;
+    }
+
+    .font-hand-body {
+      font-family: 'Kalam', cursive;
+    }
+
+    /* Subtle floating background particles */
+    .bg-float-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg-float {
+      position: absolute;
+      bottom: -40px;
+      opacity: 0;
+      animation: floatUp linear infinite;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.45;
+      }
+      85% {
+        opacity: 0.35;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(25deg) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* Envelope Wrapper & 3D Flap Animation */
+    .envelope-stage {
+      perspective: 1200px;
+    }
+
+    .envelope-card {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      height: 240px;
+      background: linear-gradient(145deg, #fffaf4 0%, #f5e6dc 100%);
+      border-radius: 16px;
+      box-shadow:
+        0 20px 45px -12px rgba(120, 72, 66, 0.22),
+        0 4px 12px rgba(120, 72, 66, 0.08),
+        inset 0 0 0 1px rgba(201, 155, 102, 0.28);
+      cursor: pointer;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .envelope-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 26px 52px -12px rgba(120, 72, 66, 0.28),
+        0 6px 16px rgba(120, 72, 66, 0.12),
+        inset 0 0 0 1px rgba(201, 155, 102, 0.4);
+    }
+
+    /* Envelope Inner Pocket & Side Flaps */
+    .envelope-pocket {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .envelope-pocket::before,
+    .envelope-pocket::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    .envelope-pocket::before {
+      left: 0;
+      border-width: 120px 0 120px 180px;
+      border-color: transparent transparent transparent rgba(238, 219, 207, 0.55);
+    }
+
+    .envelope-pocket::after {
+      right: 0;
+      border-width: 120px 180px 120px 0;
+      border-color: transparent rgba(235, 214, 201, 0.65) transparent transparent;
+    }
+
+    .envelope-bottom-fold {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 125px;
+      background: linear-gradient(180deg, #f8ece4 0%, #f1dfd3 100%);
+      clip-path: polygon(0 100%, 50% 12%, 100% 100%);
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      box-shadow: inset 0 2px 6px rgba(140, 90, 80, 0.08);
+      z-index: 2;
+    }
+
+    /* Top Flap */
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 138px;
+      background: linear-gradient(180deg, #fffdf9 0%, #f3e3d7 100%);
+      clip-path: polygon(0 0, 50% 94%, 100% 0);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      transform-origin: top center;
+      transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 4;
+      filter: drop-shadow(0 4px 6px rgba(120, 72, 66, 0.12));
+    }
+
+    .envelope-card.is-open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    /* Peeking Mini Letter inside Envelope */
+    .mini-letter {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 16px;
+      height: 180px;
+      background: #fffdf9;
+      border-radius: 10px;
+      border: 1px solid rgba(201, 155, 102, 0.3);
+      z-index: 2;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s, opacity 0.4s ease 0.5s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 22px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .envelope-card.is-open .mini-letter {
+      transform: translateY(-95px);
+    }
+
+    /* Wax Seal */
+    .wax-seal {
+      position: absolute;
+      top: 106px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #d96b7a 0%, #b54555 55%, #8c2c3a 100%);
+      box-shadow:
+        0 6px 14px rgba(140, 44, 58, 0.38),
+        inset 0 2px 4px rgba(255, 220, 225, 0.45),
+        inset 0 -3px 6px rgba(80, 18, 28, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      transition: transform 0.45s ease, opacity 0.35s ease;
+    }
+
+    .wax-seal::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 228, 232, 0.45);
+    }
+
+    .envelope-card.is-open .wax-seal {
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 0;
+    }
+
+    /* Textured Stationery Paper */
+    .stationery-paper {
+      position: relative;
+      background-color: var(--paper-ivory);
+      background-image:
+        radial-gradient(rgba(180, 150, 125, 0.14) 1px, transparent 0),
+        radial-gradient(rgba(180, 150, 125, 0.09) 1px, transparent 0),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(246, 236, 226, 0.35) 100%);
+      background-size: 24px 24px, 36px 36px, 100% 100%;
+      background-position: 0 0, 12px 12px, 0 0;
+      box-shadow:
+        0 24px 60px -15px rgba(96, 62, 52, 0.2),
+        0 4px 16px rgba(96, 62, 52, 0.07),
+        inset 0 0 0 1px rgba(201, 155, 102, 0.22);
+    }
+
+    /* Hand-drawn underline effect */
+    .hand-underline {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hand-underline::after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      bottom: 1px;
+      height: 2px;
+      background: var(--ink-navy);
+      border-radius: 999px;
+      opacity: 0.72;
+      transform: rotate(-0.4deg);
+    }
+
+    /* Reveal Transition */
+    .fade-slide-in {
+      animation: letterReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes letterReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(28px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .pulse-soft {
+      animation: pulseSoft 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.03);
+      }
+    }
+  </style>
+</head>
+<body class="relative flex flex-col items-center justify-center min-h-screen px-4 py-8 sm:py-12">
+
+  <!-- Subtle Floating Background Hearts & Sparkles -->
+  <div id="bg-float-container" class="bg-float-container" aria-hidden="true"></div>
+
+  <!-- Confetti / Petals Canvas -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ==================== SCREEN 1: INTERACTIVE ENVELOPE ==================== -->
+  <main id="envelope-screen" class="relative z-10 w-full max-w-md flex flex-col items-center text-center transition-all duration-500">
+    <p class="font-serif-elegant italic text-sm sm:text-base tracking-wide text-[#9c6b63] mb-2">
+      A special wedding note
+    </p>
+    <h1 class="font-serif-elegant text-3xl sm:text-4xl font-semibold text-[#3a2a28] mb-8">
+      For Dr. Garima
+    </h1>
+
+    <!-- Interactive Envelope -->
+    <div class="envelope-stage w-full flex justify-center mb-8">
+      <div id="envelope-card" class="envelope-card" role="button" tabindex="0" aria-label="Tap to open wedding wish envelope">
+        <!-- Peeking Letter -->
+        <div class="mini-letter">
+          <span class="font-hand-heading text-xl text-[#262b40]">Dear Dr. Garima, ♡</span>
+          <div class="w-3/4 h-1.5 bg-[#e9dfd7] rounded-full mt-3"></div>
+          <div class="w-2/3 h-1.5 bg-[#e9dfd7] rounded-full mt-2"></div>
+          <div class="w-1/2 h-1.5 bg-[#e9dfd7] rounded-full mt-2"></div>
+        </div>
+
+        <!-- Side Folds -->
+        <div class="envelope-pocket"></div>
+
+        <!-- Bottom Fold -->
+        <div class="envelope-bottom-fold flex flex-col items-center justify-end pb-5">
+          <span class="font-hand-heading text-xl text-[#6e504b]">With love, Deva ♡</span>
+        </div>
+
+        <!-- Top Flap -->
+        <div class="envelope-flap"></div>
+
+        <!-- Wax Seal -->
+        <div class="wax-seal" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff3f5" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Open Button -->
+    <button
+      id="open-btn"
+      type="button"
+      class="pulse-soft inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#b85d6b] hover:bg-[#a34d5b] active:scale-95 text-white font-serif-elegant text-base sm:text-lg shadow-lg shadow-[#b85d6b]/30 transition-all cursor-pointer"
+    >
+      <span>Tap to Open Your Wish 💌</span>
+    </button>
+  </main>
+
+  <!-- ==================== SCREEN 2: FULL WEDDING LETTER ==================== -->
+  <section id="letter-screen" class="hidden relative z-10 w-full max-w-2xl mx-auto">
+    <article class="stationery-paper fade-slide-in rounded-2xl px-6 py-8 sm:px-11 sm:py-12 overflow-hidden">
+
+      <!-- Top-Right Doodle: Interlocking Wedding Rings -->
+      <svg
+        class="absolute top-4 right-4 sm:top-6 sm:right-7 w-16 h-16 sm:w-20 sm:h-20 text-[#262b40] opacity-85 pointer-events-none"
+        viewBox="0 0 100 90"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <!-- Shine lines -->
+        <line x1="22" y1="16" x2="15" y2="10" />
+        <line x1="37" y1="12" x2="35" y2="4" />
+        <line x1="52" y1="14" x2="56" y2="6" />
+        <!-- Left Ring -->
+        <circle cx="38" cy="48" r="21" />
+        <circle cx="38" cy="48" r="16.5" stroke-width="1.5" />
+        <!-- Right Ring -->
+        <circle cx="62" cy="54" r="21" />
+        <circle cx="62" cy="54" r="16.5" stroke-width="1.5" />
+      </svg>
+
+      <!-- Right-Margin Doodle: Cute Ribbon Bow -->
+      <svg
+        class="hidden sm:block absolute top-40 right-5 w-12 h-12 text-[#262b40] opacity-80 pointer-events-none"
+        viewBox="0 0 80 80"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M40 36 C25 20, 12 28, 16 38 C19 46, 32 42, 40 36 Z" />
+        <path d="M40 36 C55 20, 68 28, 64 38 C61 46, 48 42, 40 36 Z" />
+        <circle cx="40" cy="36" r="4.5" fill="#fcf8f2" />
+        <path d="M37 40 L26 64" />
+        <path d="M43 40 L54 64" />
+      </svg>
+
+      <!-- Subtle Margin Sparkles & Hearts (Desktop/Tablet decorative accents) -->
+      <span class="hidden sm:block absolute top-32 right-9 text-[#262b40]/70 text-sm select-none" aria-hidden="true">✦</span>
+      <span class="hidden sm:block absolute top-64 right-7 text-[#262b40]/70 text-sm select-none" aria-hidden="true">✦</span>
+      <span class="hidden sm:block absolute top-80 right-6 text-[#262b40]/75 text-lg select-none" aria-hidden="true">♡</span>
+      <span class="hidden sm:block absolute bottom-52 right-8 text-[#262b40]/70 text-sm select-none" aria-hidden="true">✦</span>
+
+      <!-- Heading -->
+      <header class="pr-16 sm:pr-24 mb-5">
+        <h2 class="font-hand-heading text-3xl sm:text-4xl font-bold text-[#262b40] tracking-wide">
+          <span class="hand-underline">Dear Dr. Garima,</span> <span class="text-[#b85d6b] font-normal">♡</span>
+        </h2>
+        <p class="font-hand-body text-lg sm:text-xl text-[#262b40] mt-3 leading-relaxed">
+          Congratulations on this beautiful new chapter of your life! <span class="text-[#b85d6b]">♡</span>
+        </p>
+      </header>
+
+      <!-- Letter Body -->
+      <div class="space-y-4 sm:space-y-5 font-hand-body text-[17px] sm:text-[19px] leading-[1.72] text-[#262b40] sm:pr-10">
+        <p>
+          Sabse pehle, mujhe thoda bura lag raha hai ki main tumhari shaadi mein personally present nahi ho paunga. Tumhari life ke itne important din par wahan rehna chahta tha, tumhe milna chahta tha aur tumhari khushi ko saamne se celebrate karna chahta tha. Unfortunately, main aa nahi paunga.
+        </p>
+
+        <p>
+          Isliye maine tumhe <span class="hand-underline font-bold">₹2,000</span> bheje hain. Please ise sirf ek gift mat samajhna. Ye meri taraf se tumhare special day ke liye ek chhota sa contribution hai. Tumhe jo lena ho, jo achha lage, ya shaadi ke kisi kaam mein add karna ho, bina kisi hesitation ke use kar lena. <span class="text-[#b85d6b]">♡</span>
+        </p>
+
+        <p>
+          Main tumhari shaadi mein nahi aa pa raha, lekin meri best wishes aur blessings tumhare saath hain. I genuinely wish ki tumhari married life pyaar, respect, understanding aur bahut saari happiness se bhari ho. <span class="text-[#b85d6b]">♡</span>
+        </p>
+
+        <p>
+          Zindagi ka ye naya chapter tum dono ke liye beautiful memories lekar aaye. Hamesha ek-doosre ka support karna, ek-doosre ki respect karna aur life ke har ups and downs mein saath rehna. <span class="text-[#b85d6b]">♡</span>
+        </p>
+
+        <p>
+          Aur haan, meri absence mein shaadi enjoy karna mat bhoolna. 😄 Shaadi ki photos aur videos mujhe properly bhejna — main baad mein poori shaadi ka virtual attendance laga lunga. <span class="text-[#b85d6b]">♡</span>
+        </p>
+      </div>
+
+      <!-- Closing Highlight -->
+      <div class="mt-7 pt-2">
+        <p class="font-hand-heading text-2xl sm:text-3xl font-bold text-[#262b40] leading-snug">
+          <span class="text-base align-middle mr-1 text-[#c99b66]">✦</span>
+          <span class="hand-underline">Once again, congratulations, Garima!</span> <span class="text-[#b85d6b] font-normal">♡</span>
+        </p>
+        <p class="font-hand-body text-[17px] sm:text-[19px] text-[#262b40] mt-2 leading-relaxed">
+          I'm genuinely very happy for you and wish you both a beautiful life ahead.
+        </p>
+      </div>
+
+      <!-- Bottom Row: Flower Bouquet Doodle (Left) + Sign-off (Right) -->
+      <footer class="mt-7 flex items-end justify-between gap-4">
+        <!-- Bottom-Left Doodle: Small Bouquet of Flowers -->
+        <svg
+          class="w-20 h-24 sm:w-24 sm:h-28 text-[#262b40] opacity-85 shrink-0"
+          viewBox="0 0 110 130"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <!-- Flowers -->
+          <circle cx="38" cy="36" r="6" />
+          <circle cx="38" cy="25" r="4.5" />
+          <circle cx="48" cy="33" r="4.5" />
+          <circle cx="28" cy="33" r="4.5" />
+          <circle cx="32" cy="44" r="4.5" />
+          <circle cx="44" cy="44" r="4.5" />
+
+          <circle cx="62" cy="30" r="5.5" />
+          <circle cx="62" cy="20" r="4" />
+          <circle cx="71" cy="27" r="4" />
+          <circle cx="53" cy="27" r="4" />
+          <circle cx="68" cy="37" r="4" />
+
+          <circle cx="52" cy="52" r="5.5" />
+          <circle cx="43" cy="54" r="4" />
+          <circle cx="61" cy="54" r="4" />
+
+          <!-- Leaves -->
+          <path d="M22 48 C18 38, 25 32, 30 42" />
+          <path d="M74 42 C82 36, 84 46, 72 52" />
+
+          <!-- Bouquet Wrapper -->
+          <path d="M24 54 L54 110 L78 52" />
+          <path d="M24 54 Q51 64 78 52" />
+
+          <!-- Ribbon Bow on Bouquet -->
+          <path d="M46 86 C36 80, 34 90, 46 90" />
+          <path d="M56 86 C66 80, 68 90, 56 90" />
+          <circle cx="51" cy="88" r="3" fill="#fcf8f2" />
+          <path d="M49 91 L44 102" />
+          <path d="M53 91 L58 102" />
+
+          <!-- Tiny Hearts near bouquet -->
+          <path d="M88 94 C88 90, 82 90, 82 95 C82 99, 88 103, 88 103 C88 103, 94 99, 94 95 C94 90, 88 90, 88 94 Z" stroke-width="1.6" />
+        </svg>
+
+        <!-- Right-Aligned Sign-off -->
+        <div class="text-right pb-2">
+          <p class="font-hand-body text-[17px] sm:text-[19px] text-[#262b40]">
+            With lots of love and best wishes,
+          </p>
+          <p class="font-hand-heading text-3xl sm:text-4xl font-bold text-[#262b40] mt-1">
+            <span class="hand-underline">Yours Deva</span> <span class="text-[#b85d6b] font-normal">♡</span>
+          </p>
+        </div>
+      </footer>
+    </article>
+
+    <!-- Interactive Action Buttons -->
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+      <button
+        id="replay-btn"
+        type="button"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#b85d6b] hover:bg-[#a34d5b] active:scale-95 text-white font-serif-elegant text-sm sm:text-base shadow-md shadow-[#b85d6b]/25 transition-all cursor-pointer"
+      >
+        <span>Replay Celebration ✨</span>
+      </button>
+
+      <button
+        id="close-btn"
+        type="button"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/85 hover:bg-white active:scale-95 text-[#5c403c] border border-[#e3cec4] font-serif-elegant text-sm sm:text-base shadow-sm transition-all cursor-pointer"
+      >
+        <span>Close Envelope</span>
+      </button>
+    </div>
+  </section>
+
+  <script>
+    // ==================== FLOATING BACKGROUND HEARTS & SPARKLES ====================
+    (function initBackgroundFloats() {
+      const container = document.getElementById('bg-float-container');
+      const symbols = ['♡', '✦', '❀', '♡', '✧'];
+      const colors = ['#d98b96', '#c99b66', '#e0a9b0', '#b85d6b'];
+      const count = 18;
+
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('span');
+        el.className = 'bg-float';
+        el.textContent = symbols[i % symbols.length];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.fontSize = (12 + Math.random() * 14) + 'px';
+        el.style.color = colors[i % colors.length];
+        el.style.animationDuration = (12 + Math.random() * 14) + 's';
+        el.style.animationDelay = (-Math.random() * 18) + 's';
+        container.appendChild(el);
+      }
+    })();
+
+    // ==================== CELEBRATION CONFETTI & PETALS ENGINE ====================
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function launchCelebration() {
+      const palette = ['#d97b88', '#f2b8c0', '#d8b27c', '#f5d6a7', '#e5989b', '#fff0f3'];
+      const total = 95;
+
+      for (let i = 0; i < total; i++) {
+        const angle = (Math.random() * Math.PI * 2);
+        const speed = 3 + Math.random() * 7;
+        particles.push({
+          x: window.innerWidth / 2 + (Math.random() - 0.5) * 140,
+          y: window.innerHeight * 0.35 + (Math.random() - 0.5) * 80,
+          vx: Math.cos(angle) * speed * (0.6 + Math.random() * 0.6),
+          vy: Math.sin(angle) * speed - 4.5,
+          gravity: 0.14 + Math.random() * 0.08,
+          drag: 0.985,
+          size: 6 + Math.random() * 7,
+          color: palette[Math.floor(Math.random() * palette.length)],
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.16,
+          shape: Math.random() > 0.35 ? 'petal' : 'heart',
+          opacity: 1
+        });
+      }
+
+      if (!animationId) {
+        animateParticles();
+      }
+    }
+
+    function drawHeart(ctx, size) {
+      ctx.beginPath();
+      const s = size * 0.6;
+      ctx.moveTo(0, s * 0.3);
+      ctx.bezierCurveTo(-s, -s * 0.5, -s * 1.4, s * 0.8, 0, s * 1.6);
+      ctx.bezierCurveTo(s * 1.4, s * 0.8, s, -s * 0.5, 0, s * 0.3);
+      ctx.fill();
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.vx *= p.drag;
+        p.vy *= p.drag;
+        p.vy += p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rotation += p.rotationSpeed;
+
+        if (p.y > canvas.height * 0.78) {
+          p.opacity -= 0.025;
+        }
+
+        if (p.opacity <= 0 || p.y > canvas.height + 30) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.globalAlpha = Math.max(0, p.opacity);
+        ctx.fillStyle = p.color;
+
+        if (p.shape === 'heart') {
+          drawHeart(ctx, p.size);
+        } else {
+          // Soft petal oval
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size * 0.75, p.size * 0.42, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      if (particles.length > 0) {
+        animationId = requestAnimationFrame(animateParticles);
+      } else {
+        animationId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    // ==================== ENVELOPE & LETTER INTERACTIONS ====================
+    const envelopeScreen = document.getElementById('envelope-screen');
+    const letterScreen = document.getElementById('letter-screen');
+    const envelopeCard = document.getElementById('envelope-card');
+    const openBtn = document.getElementById('open-btn');
+    const replayBtn = document.getElementById('replay-btn');
+    const closeBtn = document.getElementById('close-btn');
+
+    let isOpening = false;
+
+    function openEnvelope() {
+      if (isOpening) return;
+      isOpening = true;
+
+      envelopeCard.classList.add('is-open');
+      launchCelebration();
+
+      setTimeout(() => {
+        envelopeScreen.classList.add('hidden');
+        letterScreen.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        isOpening = false;
+      }, 780);
+    }
+
+    function closeEnvelope() {
+      letterScreen.classList.add('hidden');
+      envelopeScreen.classList.remove('hidden');
+      envelopeCard.classList.remove('is-open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    envelopeCard.addEventListener('click', openEnvelope);
+    envelopeCard.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openEnvelope();
+      }
+    });
+    openBtn.addEventListener('click', openEnvelope);
+    replayBtn.addEventListener('click', launchCelebration);
+    closeBtn.addEventListener('click', closeEnvelope);
+  </script>
+</body>
+</html>
